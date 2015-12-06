@@ -6,6 +6,7 @@ var path = require('path');
 var compiler = webpack(config);
 var server = new WebpackDevServer(compiler, {
    contentBase: 'www',
+   hot: true,
    publicPath: '/',
    filename: 'bundle.js',
    stats: {

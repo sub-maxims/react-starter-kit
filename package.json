@@ -15,6 +15,6 @@
   "devDependencies": {
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
   }
 }
