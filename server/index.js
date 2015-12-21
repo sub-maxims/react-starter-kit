@@ -1,3 +1,5 @@
+// this should be named a webpack server
+
 var WebpackDevServer = require('webpack-dev-server');
 var webpack = require('webpack');
 var config = require('./../webpack.config.js');
@@ -6,6 +8,7 @@ var path = require('path');
 module.exports = function(){
 
     var compiler = webpack(config);
+    var bundleStart;
 
     compiler.plugin('compile', function(){
         console.log('bundling..');

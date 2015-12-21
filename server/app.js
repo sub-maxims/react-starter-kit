@@ -1,32 +1,50 @@
+require('babel-register');
 var express = require('express'),
+    http = require('http'),
+   React = require('react'),
+   ReactDOMServer = require('react-dom/server'),
+   HelloMessage = require('./../client/component'),
     path = require('path'),
+    fs = require('fs'),
+    _ = require('lodash'),
     httpProxy = require('http-proxy');
 
 var proxy = httpProxy.createProxyServer();
-var app = express();
 
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, './../www');
 
-app.use(express.static(publicPath));
+var template = fs.readFileSync(publicPath + '/index.html', 'utf8');
+var HelloComponent = React.createFactory(HelloMessage);
 
-if(!isProduction){
-    console.log('productie');
-    var bundle = require('./index.js');
-    bundle();
-    app.all('/*', function(req, res){
-        proxy.web(req, res, {
-            target: 'http://localhost:8080'
-        });
-    });
-}
-proxy.on('error', function(e){
-    console.log('Dit gaat niet goed, omdat' + e);
+var server = http.createServer(function(req,res){
+    
+    if(req.url === '/'){
+        res.setHeader('Content-Type', 'text/html');
+        var data = {};
+        data.body = ReactDOMServer.renderToString(HelloComponent());
+        var html = _.template(template);
+        res.end(html(data));
+    }
 });
 
-console.log(__dirname);
-app.listen(port, function(){
-    console.log('server running on yolo ' + port);
+if(!isProduction){
+    var bundle = require('./index.js');
+    bundle();
+    server.on('request', function(req, res){
+        if(req.url === '/bundle.js'){
+            proxy.web(req, res, {
+                target: 'http://localhost:8080'
+            });
+        }
+    });
+}
+
+server.listen(port, function(err) {
+    console.log('Listening on ' + port + '...');
+});
+proxy.on('error', function(e){
+    console.log('Dit gaat niet goed, omdat' + e);
 });
 
