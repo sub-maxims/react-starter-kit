@@ -1,39 +1,46 @@
-require('babel-register');
-var express = require('express'),
-    http = require('http'),
-   React = require('react'),
-   ReactDOMServer = require('react-dom/server'),
-   HelloMessage = require('./../client/component'),
-    path = require('path'),
-    fs = require('fs'),
-    _ = require('lodash'),
-    httpProxy = require('http-proxy');
+import path from 'path'
+import fs from 'fs'
+import _ from 'lodash'
+import http from 'http'
+import httpProxy from 'http-proxy'
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { match, RoutingContext } from 'react-router'
+import routes from './../route'
 
 var proxy = httpProxy.createProxyServer();
-
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, './../www');
-
 var template = fs.readFileSync(publicPath + '/index.html', 'utf8');
-var HelloComponent = React.createFactory(HelloMessage);
-
-var server = http.createServer(function(req,res){
+var server = http.createServer((req, res) => {
+    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     
-    if(req.url === '/'){
-        res.setHeader('Content-Type', 'text/html');
-        var data = {};
-        data.body = ReactDOMServer.renderToString(HelloComponent());
-        var html = _.template(template);
-        res.end(html(data));
-    }
-});
+        if (error) {
+            console.log('terrible' + error);
+            //writeError('ERROR!', res)
+        } else if (redirectLocation) {
+            console.log('redirect');
+            //redirect(redirectLocation, res)
+        } else if (renderProps) {
+            res.setHeader('Content-Type', 'text/html');
+            var data = {};
+            data.body = renderToString(<RoutingContext {...renderProps} />);
+            var html = _.template(template);
+            res.end(html(data));  
+        } else {
+            console.log('not found');
+            //  writeNotFound(res)
+        }
+    })
+})
 
 if(!isProduction){
     var bundle = require('./index.js');
     bundle();
     server.on('request', function(req, res){
         if(req.url === '/bundle.js'){
+            console.log('hier geweest');
             proxy.web(req, res, {
                 target: 'http://localhost:8080'
             });
