@@ -36,7 +36,7 @@ var server = http.createServer((req, res) => {
 })
 
 if(!isProduction){
-    var bundle = require('./index.js');
+    var bundle = require('./../webpack/hot-server');
     bundle();
     server.on('request', function(req, res){
         if(req.url === '/bundle.js'){

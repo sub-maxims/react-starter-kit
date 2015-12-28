@@ -2,7 +2,7 @@ var path = require('path'),
     webpack = require('webpack');
 var config = {
     devtool: 'eval',
-    context: path.join(__dirname, 'client'),
+    context: path.join(__dirname, '/../client'),
     entry: [
         'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:8080/',

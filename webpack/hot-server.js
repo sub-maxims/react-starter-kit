@@ -1,8 +1,7 @@
 // this should be named a webpack server
-
 var WebpackDevServer = require('webpack-dev-server');
 var webpack = require('webpack');
-var config = require('./../webpack.config.js');
+var config = require('./dev.config.js');
 var path = require('path');
 
 module.exports = function(){
