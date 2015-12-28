@@ -1,8 +1,9 @@
-var React = require('react');
+import React from 'react'
 
-var ByeMessage = React.createClass({
-    render: function() {
-        return <div>bye world</div>;
+export default class ByeMessage extends React.Component {
+    render() {  
+        return (
+            <div>Bye world</div>
+        )
     }
-});
-module.exports = ByeMessage;
+}

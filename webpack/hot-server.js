@@ -1,10 +1,9 @@
-// this should be named a webpack server
-var WebpackDevServer = require('webpack-dev-server');
-var webpack = require('webpack');
-var config = require('./dev.config.js');
-var path = require('path');
+import WebpackDevServer from 'webpack-dev-server'
+import webpack from 'webpack'
+import config from './dev.config'
+import path from 'path'
 
-module.exports = function(){
+export default function() {
 
     var compiler = webpack(config);
     var bundleStart;
@@ -33,4 +32,4 @@ module.exports = function(){
     server.listen(8080, 'localhost', function() {
         console.log('please a moment....');
     });
-};
+}

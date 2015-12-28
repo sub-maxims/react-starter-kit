@@ -1,5 +1,6 @@
-var path = require('path'),
-    webpack = require('webpack');
+import webpack from 'webpack'
+import path from 'path'
+
 var config = {
     devtool: 'eval',
     context: path.join(__dirname, '/../client'),
@@ -31,5 +32,5 @@ var config = {
         new webpack.NoErrorsPlugin()
     ]
 };
-module.exports = config;
+export default config
 

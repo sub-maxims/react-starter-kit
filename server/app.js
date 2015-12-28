@@ -1,4 +1,4 @@
-import path from 'path'
+impot path from 'path'
 import fs from 'fs'
 import _ from 'lodash'
 import http from 'http'
@@ -37,7 +37,7 @@ var server = http.createServer((req, res) => {
 
 if(!isProduction){
     var bundle = require('./../webpack/hot-server');
-    bundle();
+    bundle.default();
     server.on('request', function(req, res){
         if(req.url === '/bundle.js'){
             console.log('hier geweest');

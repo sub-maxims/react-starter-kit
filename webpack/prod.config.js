@@ -1,6 +1,6 @@
-var path = require('path'),
-    webpack = require('webpack');
-    
+import webpack from 'webpack'
+import path from 'path'
+
 var config = {
     devtool: 'source-map',
     context: path.join(__dirname, 'dist'),
@@ -13,5 +13,5 @@ var config = {
         publicPath: '/'
     }
 };
-module.exports = config;
+export default config;
 
