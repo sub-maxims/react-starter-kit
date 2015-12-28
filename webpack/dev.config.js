@@ -12,7 +12,7 @@ var config = {
     output: {
         path: path.join(__dirname, '/../www'),
         filename: 'bundle.js',
-        publicPath: '/'
+        publicPath: 'http://localhost:8080/'
     },
     module: {
         loaders: [
