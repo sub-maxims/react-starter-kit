@@ -7,22 +7,18 @@ var config = {
     entry: [
         'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:8080/',
-        './main.js',
+        './main.js'
     ],
     output: {
-        path: path.join(__dirname, 'www'),
+        path: path.join(__dirname, '/../www'),
         filename: 'bundle.js',
         publicPath: '/'
     },
-    resolve: {
-        extensions: ['', '.js', '.jsx'] // resolve file extentions so that we don't have to specify the extention for js and jsx files
-    },
     module: {
         loaders: [
-            { 
-                test: /\.jsx?$/, 
-                loader: 'babel?presets[]=react,presets[]=es2015',
-               // loaders: ['react-hot', 'babel-loader?experimental'],
+            {
+                test: /\.js$/,
+                loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015'],
                 exclude: /node_modules/
             }
         ]
@@ -31,6 +27,6 @@ var config = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
     ]
-};
+}
 export default config
 
