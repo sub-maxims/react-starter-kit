@@ -13,11 +13,14 @@ import routes from './../route'
 let proxy = httpProxy.createProxyServer(),
     isProduction = process.env.NODE_ENV === 'production',
     port = isProduction ? process.env.PORT : 3000,
-    publicPath = path.resolve(__dirname, './../www'),
+    publicPath = path.resolve(__dirname, './../views'),
     template = fs.readFileSync(publicPath + '/index.html', 'utf8')
 
 const server = http.createServer((req, res) => {
-    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+    match({ 
+        routes, 
+        location: req.url 
+    }, (error, redirectLocation, renderProps) => {
 
         if (error) {
             console.log('terrible' + error);
@@ -65,4 +68,3 @@ server.listen(port, function(err) {
 proxy.on('error', function(e){
     console.log('Dit gaat niet goed, omdat' + e);
 });
-
