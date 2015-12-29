@@ -1,17 +1,21 @@
-import webpack from 'webpack'
-import path from 'path'
+var path = require('path');
 
-var config = {
+module.exports = {
     devtool: 'source-map',
-    context: path.join(__dirname, 'dist'),
-    entry: [
-        './main.js',
-    ],
+    context: path.join(__dirname, '/../client'),
+    entry: './main.js',
     output: {
-        path: path.join(__dirname, 'www'),
+        path: path.join(__dirname, '/../public'),
         filename: 'bundle.js',
         publicPath: '/'
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel?presets[]=react,presets[]=es2015',
+                exclude: /node_modules/
+            }
+        ]
     }
 };
-export default config;
-

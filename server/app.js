@@ -29,7 +29,8 @@ var server = http.createServer((req, res) => {
             var html = _.template(template);
             res.end(html(data));  
         } else {
-            console.log('not found');
+            console.log('not found, though not entirely');
+            res.end();
             //  writeNotFound(res)
         }
     })
