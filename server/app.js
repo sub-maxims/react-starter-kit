@@ -59,7 +59,6 @@ if(!isProduction) {
     bundle.default();
     server.on('request', function(req, res){
         if(req.url === '/bundle.js'){
-            console.log('hier geweest');
             proxy.web(req, res, {
                 target: 'http://localhost:8080'
             });

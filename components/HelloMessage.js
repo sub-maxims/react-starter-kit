@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-export default class HelloMessag extends React.Component {
+export default class HelloMessage extends React.Component {
     render() {
         return (
             <div>
