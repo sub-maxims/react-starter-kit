@@ -3,11 +3,10 @@ import path from 'path'
 
 var config = {
     devtool: 'eval',
-    context: path.join(__dirname, '/../client'),
     entry: [
         'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:8080/',
-        './main.js'
+        './client.js'
     ],
     output: {
         path: path.join(__dirname, '/../public'),

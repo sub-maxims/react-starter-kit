@@ -13,7 +13,7 @@ import routes from './../route'
 let proxy = httpProxy.createProxyServer(),
     isProduction = process.env.NODE_ENV === 'production',
     port = isProduction ? process.env.PORT : 3000,
-    publicPath = path.resolve(__dirname, './../views'),
+    publicPath = path.resolve(__dirname, 'views'),
     template = fs.readFileSync(publicPath + '/index.html', 'utf8')
 
 const server = http.createServer((req, res) => {
