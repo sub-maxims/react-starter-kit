@@ -14,37 +14,42 @@ let proxy = httpProxy.createProxyServer(),
     isProduction = process.env.NODE_ENV === 'production',
     port = isProduction ? process.env.PORT : 3000,
     publicPath = path.resolve(__dirname, 'views'),
-    template = fs.readFileSync(publicPath + '/index.html', 'utf8')
+    template = fs.readFileSync(publicPath + '/index.html', 'utf8');
 
 const server = http.createServer((req, res) => {
     match({ 
         routes, 
         location: req.url 
     }, (error, redirectLocation, renderProps) => {
+        
+        let data = {},
+            html = _.template(template);
 
         if (error) {
-            console.log('terrible' + error);
-            //writeError('ERROR!', res)
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'text/html');
+            data.body = 'Things happen:' + error;
+            res.end(html(data));
         
         } else if (redirectLocation) {
             console.log('redirect');
-            //redirect(redirectLocation, res)
 
         } else if (renderProps) {
-            let data = {},
-                html = _.template(template);
             res.setHeader('Content-Type', 'text/html'); 
             data.body = renderToString(<RoutingContext {...renderProps} />);
             res.end(html(data));
             
-        } else {
-            console.log('not found, though not entirely');
+        } else if (req.url === '/bundle.js') {
             
-            // this feels as a hacky way to distinct dev from prod server-logic
             if(isProduction) {
                 res.end();
             }
-            //  writeNotFound(res)
+
+        } else {
+            res.statusCode = 404;
+            res.setHeader('Content-Type', 'text/html');
+            res.write('Page not found');
+            res.end();
         }
     })
 })
