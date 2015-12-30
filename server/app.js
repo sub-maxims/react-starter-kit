@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
             data.body = renderToString(<RoutingContext {...renderProps} />);
             res.end(html(data));
             
-        } else if (req.url === '/bundle.js') {
+        } else if (req.url === '/bundle.js' || req.url === '/style.css' ) {
             
             if(isProduction) {
                 res.end();

@@ -1,5 +1,5 @@
-import HelloMessage from './components/HelloMessage'
-import ByeMessage from './components/ByeMessage.js'
+import HelloMessage from './components/HelloMessage/index'
+import ByeMessage from './components/ByeMessage/index'
 
 export default {
     path: '/',

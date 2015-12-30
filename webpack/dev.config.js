@@ -19,12 +19,21 @@ var config = {
                 test: /\.js$/,
                 loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015'],
                 exclude: /node_modules/
+            },
+            {
+                test: /\.scss$/,
+                loaders: [ 'style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass?sourceMap' ]                
             }
         ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                BROWSER: JSON.stringify(true)
+            }
+        })
     ]
 }
 export default config
