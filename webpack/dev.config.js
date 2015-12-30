@@ -1,7 +1,7 @@
 import webpack from 'webpack'
 import path from 'path'
 
-var config = {
+export default {
     devtool: 'eval',
     entry: [
         'webpack/hot/dev-server',
@@ -22,7 +22,9 @@ var config = {
             },
             {
                 test: /\.scss$/,
-                loaders: [ 'style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass?sourceMap' ]                
+                // future use of CSS Modules
+                // loaders: [ 'style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass?sourceMap' ]                
+                loaders: [ 'style', 'css?sourceMap', 'sass?sourceMap' ]                
             }
         ]
     },
@@ -36,5 +38,3 @@ var config = {
         })
     ]
 }
-export default config
-
