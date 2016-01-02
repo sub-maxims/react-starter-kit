@@ -2,7 +2,7 @@ import React from 'react'
 import { match, Router } from 'react-router'
 import { render } from 'react-dom'
 import { createHistory } from 'history'
-import routes from './route'
+import routes from './routes/Index'
 
 const { pathname, search, hash } = window.location
 const location = `${pathname}${search}${hash}`

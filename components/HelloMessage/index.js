@@ -5,7 +5,7 @@ if (process.env.BROWSER) {
     require('./hello.scss');
 }
 
-export default class HelloMessage extends React.Component {
+class HelloMessage extends React.Component {
     render() {
         return (
             <div className='container'>
@@ -20,4 +20,4 @@ export default class HelloMessage extends React.Component {
     }
 }
 
-
+module.exports = HelloMessage

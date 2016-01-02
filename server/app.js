@@ -9,7 +9,7 @@ import nodeStatic from 'node-static'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
-import routes from './../route'
+import routes from './../routes/Index'
 
 let proxy = httpProxy.createProxyServer(),
     staticAssets = new nodeStatic.Server('./public'),  

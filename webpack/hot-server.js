@@ -22,7 +22,7 @@ export default function() {
         hot: true,
         inline: true,
         quiet: false,
-        noInfo: true,
+        noInfo: false,
         publicPath: '/',
         filename: 'bundle.js',
         stats: {
