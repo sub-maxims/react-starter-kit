@@ -6,7 +6,7 @@ module.exports = {
     devtool: 'source-map',
     entry: './client.js',
     output: {
-        path: path.join(__dirname, '/../public'),
+        path: path.join(__dirname, '/../__public__'),
         filename: 'bundle.js',
         publicPath: '/'
     },

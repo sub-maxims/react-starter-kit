@@ -3,7 +3,7 @@ import webpack from 'webpack'
 import config from './dev.config'
 import path from 'path'
 
-export default function() {
+module.exports = function() {
 
     var compiler = webpack(config);
     var bundleStart;
@@ -23,7 +23,7 @@ export default function() {
         inline: true,
         quiet: false,
         noInfo: false,
-        publicPath: '/',
+        publicPath: '/__public__/',
         filename: 'bundle.js',
         stats: {
             colors: true,

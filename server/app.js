@@ -15,8 +15,8 @@ let proxy = httpProxy.createProxyServer(),
     staticAssets = new nodeStatic.Server('./public'),  
     isProduction = process.env.NODE_ENV === 'production',
     port = isProduction ? process.env.PORT : 3000,
-    publicPath = path.resolve(__dirname, 'views'),
-    template = fs.readFileSync(publicPath + '/index.html', 'utf8');
+    viewPath = path.resolve(__dirname, 'views'),
+    template = fs.readFileSync(viewPath + '/index.html', 'utf8');
 
 const server = http.createServer((req, res) => {
     match({ 
@@ -41,7 +41,7 @@ const server = http.createServer((req, res) => {
             data.body = renderToString(<RoutingContext {...renderProps} />);
             res.end(html(data));
             
-        } else if (req.url === '/bundle.js' || req.url === '/style.css' ) {
+        } else if (/__public__/.test(req.url) ) {
             
             if(isProduction) {
                 req.addListener('end', function(){
@@ -60,17 +60,18 @@ const server = http.createServer((req, res) => {
 })
 
 if(!isProduction) {
-    let bundle = require('./../webpack/hot-server');
-    bundle.default();
+    require('./../webpack/hot-server')();
     server.on('request', function(req, res){
-      
-        if(req.url === '/bundle.js'){
+
+        let publicFolder = '/__public__'; 
+
+        if(req.url === publicFolder + '/bundle.js'){
             proxy.web(req, res, {
-                target: 'http://localhost:8080'
+                target: 'http://localhost:8080/'
             });
         }
 
-        if(req.url === '/style.css') {
+        if(req.url === publicFolder + '/style.css') {
             res.end();
         }
     });

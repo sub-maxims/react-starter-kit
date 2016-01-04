@@ -1,7 +1,7 @@
 import ByeMessage from '../components/ByeMessage/index'
 
 module.exports = {
-    path: 'about',
+    path: 'bye',
     component: ByeMessage
 }
 

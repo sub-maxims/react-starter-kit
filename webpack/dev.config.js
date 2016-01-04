@@ -9,9 +9,9 @@ export default {
         './client.js'
     ],
     output: {
-        path: path.join(__dirname, '/../public'),
+        path: path.join(__dirname, '/../__public__'),
         filename: 'bundle.js',
-        publicPath: 'http://localhost:8080/'
+        publicPath: 'http://localhost:8080/__public__/'
     },
     module: {
         loaders: [

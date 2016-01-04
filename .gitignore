@@ -1,2 +1,3 @@
 node_modules/
-public/
+__public__/
+stats.json
