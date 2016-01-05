@@ -4,6 +4,10 @@ import { render } from 'react-dom'
 import { createHistory } from 'history'
 import routes from './routes/Index'
 
+if (process.env.BROWSER) {
+    require('./styles/manifest.scss');
+}
+
 const { pathname, search, hash } = window.location
 const location = `${pathname}${search}${hash}`
 // calling `match` is simply for side effects of
