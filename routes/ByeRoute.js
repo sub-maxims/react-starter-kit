@@ -4,4 +4,3 @@ module.exports = {
     path: 'bye',
     component: ByeMessage
 }
-

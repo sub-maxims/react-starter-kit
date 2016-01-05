@@ -7,7 +7,9 @@ if (process.env.BROWSER) {
 class ByeMessage extends React.Component {
     render() {  
         return (
-            <div className='text'>Bye world</div>
+            <div className='bye-container'>
+                <p>Bye world ( lazy loaded )</p>
+            </div>
         )
     }
 }

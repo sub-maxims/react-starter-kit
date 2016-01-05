@@ -26,6 +26,11 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
         new ExtractTextPlugin('style.css'),
         new webpack.DefinePlugin({
             'process.env': {
