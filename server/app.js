@@ -2,17 +2,16 @@
 
 import path from 'path'
 import fs from 'fs'
-import _ from 'lodash'
 import http from 'http'
+import url from 'url'
 import httpProxy from 'http-proxy'
-import nodeStatic from 'node-static'
 import React from 'react'
+import _ from 'lodash'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
 import routes from './../routes/Index'
 
 let proxy = httpProxy.createProxyServer(),
-    staticAssets = new nodeStatic.Server('./public'),  
     isProduction = process.env.NODE_ENV === 'production',
     port = isProduction ? process.env.PORT : 3000,
     viewPath = path.resolve(__dirname, 'views'),
@@ -23,7 +22,6 @@ const server = http.createServer((req, res) => {
         routes, 
         location: req.url 
     }, (error, redirectLocation, renderProps) => {
-        
         let data = {},
             html = _.template(template);
 
@@ -38,15 +36,26 @@ const server = http.createServer((req, res) => {
 
         } else if (renderProps) {
             res.setHeader('Content-Type', 'text/html'); 
+            res.sendDate = true;
             data.body = renderToString(<RoutingContext {...renderProps} />);
             res.end(html(data));
             
         } else if (/__public__/.test(req.url) ) {
             
-            if(isProduction) {
-                req.addListener('end', function(){
-                    staticAssets.serve(req, res);
-                }).resume();
+            if (isProduction) {
+                let pathname = url.parse(req.url).pathname,
+                    fileLocation = path.join(process.cwd(), pathname),
+                    readStream = fs.createReadStream(fileLocation);
+                readStream.on('open', function () {
+                    res.statusCode = 200;
+                    res.sendDate = true;
+                    readStream.pipe(res);
+                });
+                readStream.on('error', function(err) {
+                    console.error(err);
+                    res.statusCode = 404;
+                    res.end();
+                });
             }
             return;
 
@@ -59,19 +68,18 @@ const server = http.createServer((req, res) => {
     })
 })
 
-if(!isProduction) {
+if (!isProduction) {
     require('./../webpack/hot-server')();
     server.on('request', function(req, res){
-
         let publicFolder = '/__public__'; 
 
-        if(req.url === publicFolder + '/bundle.js'){
+        if (req.url === publicFolder + '/bundle.js') {
             proxy.web(req, res, {
                 target: 'http://localhost:8080/'
             });
         }
 
-        if(req.url === publicFolder + '/style.css') {
+        if (req.url === publicFolder + '/style.css') {
             res.end();
         }
     });
