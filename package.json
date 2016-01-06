@@ -5,10 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf __public__",
-    "build": "npm run clean && NODE_ENV=production webpack -p --config webpack/prod.config.js --progress --profile --colors",
-    "stats": "webpack --config webpack/prod.config.js  --profile --json > ./stats.json",
+    "build": "npm run clean && NODE_ENV=production ./node_modules/.bin/webpack -p --config webpack/prod.config.js --progress --profile --colors",
+    "stats": "./node_modules/.bin/webpack --config webpack/prod.config.js  --profile --json > ./stats.json",
     "postinstall": "npm run build",
-    "dev": "NODE_ENV=development nodemon app.js",
+    "dev": "NODE_ENV=development ./node_modules/.bin/nodemon app.js",
     "start": "NODE_ENV=production PORT=8080 node app.js"
   },
   "author": "Hendrik Kurniawan",
@@ -34,6 +34,7 @@
     "extract-text-webpack-plugin": "^0.9.1",
     "http-proxy": "^1.12.0",
     "node-sass": "^3.4.2",
+    "nodemon": "^1.8.1",
     "react-hot-loader": "^1.3.0",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
