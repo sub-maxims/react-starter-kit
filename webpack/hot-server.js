@@ -21,7 +21,7 @@ module.exports = function() {
         // contentBase: 'www',
         hot: true,
         inline: true,
-        quiet: false,
+        quiet: true,
         noInfo: false,
         publicPath: '/__public__/',
         filename: 'bundle.js',
