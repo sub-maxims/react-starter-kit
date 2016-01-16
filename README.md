@@ -1,6 +1,6 @@
 ## Install
 
-Because we are requring `babel-register', this installation will only work with node version > 5.x
+Due to the dependency on `babel-register`, this starter-kit works only with node version >= 5.x
 
 ```
 npm install nodemon -g
